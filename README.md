@@ -1,2 +1,2 @@
 # utilities.h
-A C++ header includes series of functions to make programming in C++ easier.
+A C++ single header file that includes series of functions for routine tasks.
