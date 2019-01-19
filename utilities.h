@@ -19,11 +19,10 @@
 #include <boost/algorithm/string/split.hpp> */
 #endif
 
-#define DUMP(a)								\
-    do { std::cout << #a " is value " << (a) << std::endl; } while(false)
-
 namespace afutils {
-    inline std::string executeCommand(const char *cmd)
+  enum class printingOptions { plain, withBrackets};
+
+  inline std::string executeCommand(const char *cmd)
     {
         std::array<char, 128> buffer;
         std::string result;
@@ -85,7 +84,6 @@ namespace afutils {
             os << "  "; 
 	} 
 	os << '\n'; // could be "]\n"
-	os << '\n';
 	return os; 
       }
 
@@ -102,7 +100,6 @@ namespace afutils {
 	  } 
 	  os << '\n';
 	}
-	os << '\n';
 	return os; 
       }
 
@@ -120,11 +117,30 @@ namespace afutils {
 	    } 
 	    os << '\n';
 	  }
-	  os << '\n';
 	}	     
 	return os; 
       }
 
+    template<typename T>
+      void permute(std::vector<std::vector<T>> &pVec, std::vector<T> a, int l, int r){
+      if(l == r){
+	pVec.push_back(a);
+      } else {
+	for(int i = l; i <= r; ++i){
+	  std::swap(a[l], a[i]);
+	  permute(pVec, a, l+1, r);
+	  std::swap(a[l], a[i]);
+	}
+      }
+    }
+
+    template<typename T>
+      std::vector<std::vector<T>> getPermutations(std::vector<T> s){
+      std::vector<std::vector<T>> v;
+      permute(v, s, 0, s.size() - 1);
+      return v;
+    }
+    
 }
       
 
